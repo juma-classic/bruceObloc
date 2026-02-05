@@ -15,7 +15,7 @@ export const TokenSetup: React.FC<TokenSetupProps> = ({ onTokenSet, onCancel }) 
 
     // Get current app ID on mount
     React.useEffect(() => {
-        const configAppId = localStorage.getItem('config.app_id') || '82255';
+        const configAppId = localStorage.getItem('config.app_id') || '125045';
         setCurrentAppId(configAppId);
     }, []);
 

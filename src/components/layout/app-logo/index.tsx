@@ -8,7 +8,7 @@ export const AppLogo = () => {
     if (!isDesktop) return null;
     return (
         <a
-            href='https://www.tradermaster.site/'
+            href='https://bruce-obloc.vercel.app/'
             target='_blank'
             rel='noopener noreferrer'
             className='app-header__logo tradermaster-logo'

@@ -94,7 +94,7 @@ export class RealWorldTickSpeedIntegrationService {
             if (config.mode === 'real' && config.apiToken) {
                 await this.engine.initialize({
                     apiToken: config.apiToken,
-                    appId: config.appId || '82255',
+                    appId: config.appId || '125045',
                     strategy: config.strategy,
                     symbol: config.symbol || 'R_100',
                     stakeAmount: config.stakeAmount,

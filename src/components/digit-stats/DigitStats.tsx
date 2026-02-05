@@ -28,7 +28,7 @@ class DigitStatsAPI {
 
     private connect() {
         try {
-            const appId = '82255';
+            const appId = '125045';
             const wsUrl = `wss://ws.derivws.com/websockets/v3?app_id=${appId}`;
             
             this.ws = new WebSocket(wsUrl);

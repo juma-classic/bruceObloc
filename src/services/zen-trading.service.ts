@@ -2286,7 +2286,7 @@ class ZenTradingService {
 
             // 3. Check for general config app ID
             const configAppId = localStorage.getItem('config.app_id');
-            if (configAppId && configAppId !== '80058') {
+            if (configAppId && configAppId !== '125045') {
                 console.log(`✅ Zen Trading: Using config app ID: ${configAppId}`);
                 return configAppId;
             }

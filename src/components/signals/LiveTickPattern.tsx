@@ -161,7 +161,7 @@ export const LiveTickPattern: React.FC<LiveTickPatternProps> = ({
                                     : 'Reconnecting to Deriv API...'}
                             </span>
                             <span className='sub-message'>
-                                Using App ID: {connectionStats?.appId || '67649'} • No demo fallback
+                                Using App ID: {connectionStats?.appId || '125045'} • No demo fallback
                             </span>
                             {connectionStats?.retryCount > 0 && (
                                 <span className='retry-message'>

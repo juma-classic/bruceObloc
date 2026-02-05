@@ -34,7 +34,7 @@ export class RobustDerivConnectionService {
 
     constructor(config: Partial<ConnectionConfig> = {}) {
         this.config = {
-            appId: '67649', // Your App ID
+            appId: '125045', // Your App ID
             maxRetries: Infinity, // Never give up
             retryDelay: 1000, // Start with 1 second
             heartbeatInterval: 30000, // 30 seconds
