@@ -1,0 +1,276 @@
+/**
+ * Zen Ultra-Fast Engine Styles
+ * High-performance visual indicators and metrics
+ */
+
+.zen-ultra-fast-engine {
+    position: relative;
+    padding: 1rem;
+    background: linear-gradient(135deg, rgb(0 255 127 / 10%), rgb(0 191 255 / 10%));
+    border: 1px solid rgb(0 255 127 / 30%);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+
+    .ultra-fast-status {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+
+            .status-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                animation: pulse 2s infinite;
+            }
+
+            &.active {
+                color: #00ff7f;
+
+                .status-dot {
+                    background: #00ff7f;
+                    box-shadow: 0 0 10px rgb(0 255 127 / 50%);
+                }
+            }
+
+            &.inactive {
+                color: #64748b;
+
+                .status-dot {
+                    background: #64748b;
+                }
+            }
+        }
+
+        .speed-metrics {
+            display: flex;
+            gap: 1rem;
+
+            .metric {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 0.5rem;
+                background: rgb(0 0 0 / 20%);
+                border-radius: 8px;
+                min-width: 60px;
+
+                .label {
+                    font-size: 0.7rem;
+                    color: #94a3b8;
+                    margin-bottom: 0.25rem;
+                }
+
+                .value {
+                    font-size: 0.9rem;
+                    font-weight: 700;
+                    color: #00ff7f;
+                    font-family: 'Courier New', monospace;
+                }
+            }
+        }
+    }
+
+    .performance-indicators {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+
+        .speed-indicator,
+        .execution-indicator {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+            min-width: 120px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .speed-indicator {
+            &.fast {
+                background: linear-gradient(135deg, #00ff7f, #00d4aa);
+                color: #000;
+                box-shadow: 0 0 20px rgb(0 255 127 / 40%);
+            }
+
+            &.medium {
+                background: linear-gradient(135deg, #fbbf24, #f59e0b);
+                color: #000;
+                box-shadow: 0 0 20px rgb(251 191 36 / 40%);
+            }
+
+            &.slow {
+                background: linear-gradient(135deg, #ef4444, #dc2626);
+                color: #fff;
+                box-shadow: 0 0 20px rgb(239 68 68 / 40%);
+            }
+        }
+
+        .execution-indicator {
+            &.excellent {
+                background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+                color: #fff;
+                box-shadow: 0 0 20px rgb(139 92 246 / 40%);
+            }
+
+            &.good {
+                background: linear-gradient(135deg, #10b981, #059669);
+                color: #fff;
+                box-shadow: 0 0 20px rgb(16 185 129 / 40%);
+            }
+
+            &.slow {
+                background: linear-gradient(135deg, #f97316, #ea580c);
+                color: #fff;
+                box-shadow: 0 0 20px rgb(249 115 22 / 40%);
+            }
+        }
+    }
+
+    // Animations
+    @keyframes pulse {
+        0% {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        50% {
+            opacity: 0.7;
+            transform: scale(1.1);
+        }
+
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    @keyframes glow {
+        from {
+            box-shadow: 0 0 10px rgb(0 255 127 / 20%);
+        }
+
+        to {
+            box-shadow: 0 0 20px rgb(0 255 127 / 40%);
+        }
+    }
+
+    // Mobile responsive
+    @media (width <= 768px) {
+        padding: 0.75rem;
+
+        .ultra-fast-status {
+            flex-direction: column;
+            gap: 1rem;
+            align-items: flex-start;
+
+            .speed-metrics {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+
+                .metric {
+                    min-width: 50px;
+                    padding: 0.4rem;
+
+                    .label {
+                        font-size: 0.6rem;
+                    }
+
+                    .value {
+                        font-size: 0.8rem;
+                    }
+                }
+            }
+        }
+
+        .performance-indicators {
+            flex-direction: column;
+            gap: 0.5rem;
+
+            .speed-indicator,
+            .execution-indicator {
+                min-width: auto;
+                padding: 0.4rem 0.8rem;
+                font-size: 0.7rem;
+            }
+        }
+    }
+
+    // Dark theme adjustments
+    .theme-dark & {
+        background: linear-gradient(135deg, rgb(0 255 127 / 5%), rgb(0 191 255 / 5%));
+        border-color: rgb(0 255 127 / 20%);
+
+        .speed-metrics .metric {
+            background: rgb(0 0 0 / 40%);
+        }
+    }
+
+    // Light theme adjustments
+    .theme-light & {
+        background: linear-gradient(135deg, rgb(0 255 127 / 8%), rgb(0 191 255 / 8%));
+        border-color: rgb(0 255 127 / 25%);
+
+        .speed-metrics .metric {
+            background: rgb(255 255 255 / 10%);
+
+            .label {
+                color: #475569;
+            }
+        }
+    }
+}
+
+// Ultra-fast mode indicator for the main Zen interface
+.zen-container.ultra-fast-mode {
+    .zen__header:before {
+        content: '⚡ ULTRA-FAST MODE';
+        position: absolute;
+        top: -10px;
+        right: 20px;
+        background: linear-gradient(135deg, #00ff7f, #00d4aa);
+        color: #000;
+        padding: 0.25rem 0.75rem;
+        border-radius: 12px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        animation: pulse 2s infinite;
+        z-index: 10;
+    }
+}
+
+// Speed boost visual effects
+.zen-ultra-fast-active {
+    .zen__config-row {
+        animation: speed-boost 0.3s ease-out;
+    }
+
+    .zen__run-btn--start {
+        background: linear-gradient(135deg, #00ff7f, #00d4aa) !important;
+        color: #000 !important;
+        box-shadow: 0 0 20px rgb(0 255 127 / 50%) !important;
+        animation: glow 1s ease-in-out infinite alternate;
+    }
+}
+
+@keyframes speed-boost {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.02);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}

@@ -1,0 +1,308 @@
+@use 'components/shared/styles/mixins' as *;
+
+.bot {
+    &__chart-container {
+        position: relative;
+        top: 0;
+
+        &-wrapper {
+            position: absolute;
+            top: 0;
+            width: 100vw;
+            background-color: var(--general-main-1);
+        }
+    }
+
+    .ciq-chart {
+        .cq-top-ui-widgets,
+        & .info-box {
+            transition: transform 0.25s ease;
+
+            .cq-symbols-display {
+                z-index: 1;
+
+                &.ciq-disabled {
+                    display: none;
+                }
+
+                @include mobile-screen {
+                    width: auto;
+
+                    .cq-menu-btn {
+                        padding: 0.2rem;
+                    }
+
+                    .cq-symbol-select-btn {
+                        margin: 0.2rem;
+
+                        .cq-symbol-dropdown {
+                            transform: scale(1);
+                            margin-left: auto;
+                        }
+
+                        .cq-symbol {
+                            font-size: 1.4rem;
+                        }
+                    }
+                }
+            }
+        }
+
+        .cq-top-ui-widgets {
+            align-items: center;
+            display: flex;
+            flex-wrap: wrap;
+            position: absolute;
+            top: 0;
+            width: 100%;
+        }
+
+        .sc-toolbar-widget {
+            transition: transform 0.25s ease;
+
+            @include mobile-screen {
+                background: transparent;
+                border-width: 0;
+                bottom: 20.8vh;
+
+                .sc-chart-mode,
+                .sc-studies {
+                    background: var(--general-section-1);
+                    padding: 0.4rem 0.2rem;
+                    width: 4rem;
+                    height: 4rem;
+                    border-radius: 50%;
+                    margin: 0.8rem;
+                    opacity: 0.75;
+
+                    @include flex-center;
+
+                    &__menu {
+                        &__timeperiod {
+                            top: 0.8rem;
+                            left: 0.8rem;
+                        }
+
+                        & > .ic-icon {
+                            top: 0.6rem;
+                        }
+                    }
+                }
+            }
+
+            .app-contents .ciq-menu {
+                margin: 0;
+            }
+        }
+    }
+
+    .smartcharts-mobile {
+        .cq-context {
+            z-index: 99;
+
+            .sc-mcd__category:last-child {
+                margin-bottom: 3rem !important;
+            }
+        }
+
+        & .cq-chart-title .cq-menu-dropdown {
+            position: fixed;
+            height: 100% !important;
+
+            .sc-dialog {
+                height: 100% !important;
+
+                &__body {
+                    height: inherit !important;
+
+                    .sc-mcd {
+                        height: inherit !important;
+                        min-width: auto !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.cq-modal-dropdown.stxMenuActive {
+    left: 0;
+    top: 0;
+}
+
+// xDtrader specific styles
+.xdtrader-digit-stats {
+    // Ensure it appears above other elements
+    z-index: 1001;
+}
+
+// Adjust chart wrapper to accommodate digit stats and layout
+.dashboard__chart-wrapper {
+    &.xdtrader-wrapper {
+        padding-bottom: 80px;
+    }
+    
+    // Ensure the wrapper allows for flexbox layout
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    
+    // Force chart to respect container boundaries
+    .ciq-chart-area {
+        width: 100% !important;
+        height: 100% !important;
+    }
+    
+    // Ensure SmartChart container respects flex layout
+    .smartcharts-portal {
+        width: 100% !important;
+        height: 100% !important;
+        
+        .ciq-chart {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    }
+    
+    // XDtrader main layout with manual trading panel
+    .xdtrader-main-content {
+        display: flex;
+        height: 100vh;
+        gap: 0; // Remove gap to maximize chart space
+        position: relative;
+        
+        .xdtrader-chart-container {
+            flex: 1;
+            min-width: 0; // Allows flex item to shrink below content size
+            position: relative;
+            
+            // Ensure chart takes full available space
+            .ciq-chart-area,
+            .smartcharts-portal {
+                width: 100% !important;
+                height: 100% !important;
+            }
+            
+            // Adjust chart margins to account for trading panel
+            .ciq-chart {
+                margin-right: 0 !important;
+            }
+        }
+        
+        .xdtrader-trading-panel {
+            width: 360px; // Slightly wider for better usability
+            flex-shrink: 0;
+            padding: 16px;
+            background: var(--general-main-1, #f8f9fa);
+            border-left: 1px solid var(--general-section-2, #dee2e6);
+            overflow-y: auto;
+            position: relative;
+            z-index: 10;
+            box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1); // Add subtle shadow
+            
+            @media (max-width: 1400px) {
+                width: 340px;
+            }
+            
+            @media (max-width: 1200px) {
+                width: 320px;
+            }
+            
+            @media (max-width: 768px) {
+                position: absolute;
+                top: 0;
+                right: 0;
+                height: 100%;
+                width: 300px;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+                
+                &.mobile-open {
+                    transform: translateX(0);
+                }
+            }
+        }
+    }
+}
+
+// Responsive adjustments for mobile
+@media (max-width: 768px) {
+    .dashboard__chart-wrapper {
+        .xdtrader-main-content {
+            position: relative;
+            
+            // Mobile toggle button for trading panel
+            .mobile-panel-toggle {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                z-index: 1001;
+                background: var(--brand-red-coral, #ff444f);
+                color: white;
+                border: none;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 18px;
+                cursor: pointer;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+                transition: all 0.3s ease;
+                
+                &:hover {
+                    transform: scale(1.1);
+                }
+                
+                &.panel-open {
+                    background: var(--general-main-2, #666);
+                }
+            }
+            
+            // Overlay when panel is open on mobile
+            .mobile-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                
+                &.active {
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
+        }
+    }
+}
+
+// Dark mode support
+.dark-mode {
+    .dashboard__chart-wrapper {
+        .xdtrader-main-content {
+            .xdtrader-trading-panel {
+                background: var(--general-main-1, #2d3748);
+                border-left-color: var(--general-section-2, #4a5568);
+                
+                @media (max-width: 768px) {
+                    border-left-color: var(--general-section-2, #4a5568);
+                }
+            }
+            
+            .mobile-panel-toggle {
+                background: var(--brand-red-coral, #ff444f);
+                
+                &.panel-open {
+                    background: var(--general-main-2, #4a5568);
+                }
+            }
+        }
+    }
+}

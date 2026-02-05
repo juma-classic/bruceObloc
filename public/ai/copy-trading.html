@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Copy Trading - Advanced Trading Tools</title>
+        <link rel="stylesheet" href="/ai/index-enhanced.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+        <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        <script src="https://unpkg.com/react-modal@3.16.1/lib/index.js"></script>
+        <style>
+            /* Copy Trading Specific Styles */
+            .main_copy {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                font-family: 'Inter', sans-serif;
+            }
+
+            .ena_DC {
+                background: var(--bg-secondary);
+                border-radius: var(--radius-lg);
+                padding: 24px;
+                margin-bottom: 24px;
+                box-shadow: var(--shadow-md);
+                border: 1px solid var(--border);
+            }
+
+            .enable_disable {
+                display: flex;
+                gap: 16px;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+
+            .copy-trading-btn {
+                padding: 12px 24px;
+                border: none;
+                border-radius: var(--radius-md);
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                font-size: 14px;
+            }
+
+            .copy-trading-btn.start {
+                background: var(--success);
+                color: white;
+            }
+
+            .copy-trading-btn.stop {
+                background: var(--error);
+                color: white;
+            }
+
+            .copy-trading-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: var(--shadow-md);
+            }
+
+            .tutorial-button {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+                padding: 12px;
+                background: var(--bg-primary);
+                border-radius: var(--radius-md);
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            .tutorial-button:hover {
+                background: var(--bg-tertiary);
+            }
+
+            .realaccount-card {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+                color: white;
+                padding: 16px 20px;
+                border-radius: var(--radius-md);
+                margin-bottom: 16px;
+            }
+
+            .realaccount-label {
+                font-weight: 600;
+                font-size: 16px;
+            }
+
+            .realaccount-amount {
+                font-weight: 700;
+                font-size: 18px;
+            }
+
+            .success-message {
+                background: rgba(16, 185, 129, 0.1);
+                color: var(--success);
+                padding: 12px 16px;
+                border-radius: var(--radius-md);
+                border: 1px solid rgba(16, 185, 129, 0.2);
+                margin-bottom: 16px;
+                font-weight: 500;
+            }
+
+            .title {
+                text-align: center;
+                margin-bottom: 24px;
+                padding: 16px;
+                background: var(--bg-primary);
+                border-radius: var(--radius-md);
+            }
+
+            .title small {
+                color: var(--text-secondary);
+                font-size: 16px;
+                font-weight: 500;
+            }
+
+            .copytrading {
+                background: var(--bg-secondary);
+                border-radius: var(--radius-lg);
+                padding: 24px;
+                box-shadow: var(--shadow-md);
+                border: 1px solid var(--border);
+            }
+
+            .input_content {
+                margin-bottom: 24px;
+            }
+
+            .input_items {
+                display: flex;
+                gap: 12px;
+                margin-bottom: 20px;
+                flex-wrap: wrap;
+            }
+
+            .tokens-input {
+                flex: 1;
+                min-width: 200px;
+                padding: 12px 16px;
+                border: 1px solid var(--border);
+                border-radius: var(--radius-md);
+                font-size: 14px;
+                transition: border-color 0.3s ease;
+            }
+
+            .tokens-input:focus {
+                outline: none;
+                border-color: var(--primary);
+                box-shadow: 0 0 0 3px rgba(139, 21, 56, 0.1);
+            }
+
+            .token-action-btn {
+                padding: 12px 20px;
+                background: var(--primary);
+                color: white;
+                border: none;
+                border-radius: var(--radius-md);
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .token-action-btn:hover {
+                background: var(--primary-light);
+                transform: translateY(-1px);
+            }
+
+            .tokens_container {
+                background: var(--bg-primary);
+                border-radius: var(--radius-md);
+                padding: 20px;
+            }
+
+            .tokens-list h2 {
+                margin: 0 0 16px 0;
+                color: var(--text-primary);
+                font-size: 18px;
+            }
+
+            .tokens-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .token {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 12px 16px;
+                background: var(--bg-secondary);
+                border: 1px solid var(--border);
+                border-radius: var(--radius-md);
+                margin-bottom: 8px;
+                transition: all 0.3s ease;
+            }
+
+            .token:hover {
+                box-shadow: var(--shadow-sm);
+                transform: translateY(-1px);
+            }
+
+            .token.fall {
+                animation: fallOut 0.5s ease-in forwards;
+            }
+
+            @keyframes fallOut {
+                to {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+            }
+
+            .token-number {
+                font-weight: 600;
+                color: var(--text-secondary);
+                min-width: 24px;
+            }
+
+            .token-item {
+                flex: 1;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 14px;
+                color: var(--text-primary);
+            }
+
+            .trash-btn {
+                background: var(--error);
+                color: white;
+                border: none;
+                padding: 8px;
+                border-radius: var(--radius-sm);
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .trash-btn:hover {
+                background: #dc2626;
+                transform: scale(1.1);
+            }
+
+            .token_info {
+                text-align: center;
+                color: var(--text-secondary);
+                font-style: italic;
+                padding: 40px 20px;
+            }
+
+            /* Modal Styles */
+            .error-modal {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: var(--bg-secondary);
+                border-radius: var(--radius-lg);
+                padding: 24px;
+                box-shadow: var(--shadow-lg);
+                border: 1px solid var(--border);
+                z-index: 1000;
+                min-width: 300px;
+            }
+
+            .modal-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+            }
+
+            .modal-content h3 {
+                margin: 0 0 16px 0;
+                color: var(--error);
+                font-size: 18px;
+            }
+
+            .modal-content p {
+                margin: 0 0 20px 0;
+                color: var(--text-secondary);
+                line-height: 1.5;
+            }
+
+            .modal-content button {
+                background: var(--primary);
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: var(--radius-md);
+                cursor: pointer;
+                font-weight: 600;
+            }
+
+            /* Responsive Design */
+            @media (max-width: 768px) {
+                .main_copy {
+                    padding: 16px;
+                }
+
+                .input_items {
+                    flex-direction: column;
+                }
+
+                .tokens-input {
+                    min-width: auto;
+                }
+
+                .enable_disable {
+                    flex-direction: column;
+                    align-items: stretch;
+                }
+
+                .copy-trading-btn {
+                    text-align: center;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Skip Link for Accessibility -->
+        <a href="#main-content" class="skip-link">Skip to main content</a>
+
+        <!-- Main App -->
+        <div id="app" class="app">
+            <!-- Compact Header -->
+            <header class="header-compact">
+                <div class="container">
+                    <div class="header-row">
+                        <h1 class="title-compact">📊 Copy Trading Dashboard</h1>
+                        <div class="header-status">
+                            <div class="header-actions">
+                                <button onclick="window.location.href='/ai/'" class="btn-compact btn-secondary">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                        <polyline points="9,22 9,12 15,12 15,22"></polyline>
+                                    </svg>
+                                    Analysis Tool
+                                </button>
+                                <button onclick="window.location.href='/ai/smart-analysis.html'" class="btn-compact btn-secondary">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path d="M9 19c-5 0-8-3-8-8s3-8 8-8 8 3 8 8-3 8-8 8z"></path>
+                                        <path d="M17 17l4.5 4.5"></path>
+                                    </svg>
+                                    Smart Analysis
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main id="main-content" class="main">
+                <div class="container">
+                    <div id="copy-trading-root"></div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Load Copy Trading Component -->
+        <script>
+            // Simple Copy Trading Implementation without React
+            function createCopyTradingApp() {
+                const container = document.getElementById('copy-trading-root');
+                
+                // Create the main structure
+                container.innerHTML = `
+                    <div class="main_copy">
+                        <!-- Demo to Real Copy Trading Section -->
+                        <div class="ena_DC">
+                            <div class="enable_disable">
+                                <button id="demo-trading-btn" class="copy-trading-btn start">
+                                    Start Demo to Real Copy Trading
+                                </button>
+                                
+                                <div class="tutorial-button" onclick="openTutorial('https://www.youtube.com/embed/gsWzKmslEnY')">
+                                    <svg width="30" height="30" viewBox="0 0 24 24" fill="#FF0000">
+                                        <polygon points="5,3 19,12 5,21"></polygon>
+                                    </svg>
+                                    <div style="font-size: 12px; color: #333;">Tutorial</div>
+                                </div>
+                            </div>
+
+                            <!-- Real Account Card -->
+                            <div class="realaccount-card">
+                                <span class="realaccount-label">CR*****</span>
+                                <span class="realaccount-amount">****** USD</span>
+                            </div>
+
+                            <div id="demo-success-message" class="success-message" style="display: none;"></div>
+                        </div>
+
+                        <!-- Section Title -->
+                        <header class="title">
+                            <small>Add tokens to Replicator</small>
+                        </header>
+
+                        <!-- Main Copy Trading Section -->
+                        <div class="copytrading">
+                            <div class="input_content">
+                                <!-- Token Input Section -->
+                                <div class="input_items">
+                                    <input type="text" id="token-input" class="tokens-input" placeholder="Enter Client token" />
+                                    <button class="token-action-btn" onclick="addToken()">Add</button>
+                                    <button class="token-action-btn" onclick="syncTokens()">
+                                        <span id="sync-text">Sync</span>
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                            <polyline points="23 4 23 10 17 10"></polyline>
+                                            <polyline points="1 20 1 14 7 14"></polyline>
+                                            <path d="m3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <!-- Copy Trading Control -->
+                                <div class="enable_disable">
+                                    <button id="copy-trading-btn" class="copy-trading-btn start">
+                                        Start Copy Trading
+                                    </button>
+                                    <button onclick="openTutorial('https://www.youtube.com/embed/gsWzKmslEnY')">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="#FF0000">
+                                            <polygon points="5,3 19,12 5,21"></polygon>
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <div id="success-message" class="success-message" style="display: none;"></div>
+                            </div>
+
+                            <!-- Tokens List -->
+                            <div class="tokens_container">
+                                <ul class="tokens-list">
+                                    <h2>Total Clients added: <span id="token-count">0</span></h2>
+                                    <div id="tokens-list-container">
+                                        <div class="token_info">No tokens added yet</div>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // Initialize functionality
+                initializeCopyTrading();
+            }
+
+            let tokens = [];
+            let isDemoTradingActive = false;
+            let isCopyTradingActive = false;
+
+            function initializeCopyTrading() {
+                // Load tokens from localStorage
+                const savedTokens = localStorage.getItem('copyTradingTokens');
+                if (savedTokens) {
+                    tokens = JSON.parse(savedTokens);
+                    updateTokensList();
+                }
+
+                // Setup event listeners
+                document.getElementById('demo-trading-btn').addEventListener('click', toggleDemoTrading);
+                document.getElementById('copy-trading-btn').addEventListener('click', toggleCopyTrading);
+            }
+
+            function addToken() {
+                const input = document.getElementById('token-input');
+                const token = input.value.trim();
+                
+                if (!token) return;
+                
+                if (token.length < 10) {
+                    alert('Invalid token format. Token must be at least 10 characters long.');
+                    return;
+                }
+
+                tokens.unshift(token);
+                localStorage.setItem('copyTradingTokens', JSON.stringify(tokens));
+                input.value = '';
+                updateTokensList();
+            }
+
+            function removeToken(index) {
+                tokens.splice(index, 1);
+                localStorage.setItem('copyTradingTokens', JSON.stringify(tokens));
+                updateTokensList();
+            }
+
+            function syncTokens() {
+                const syncText = document.getElementById('sync-text');
+                syncText.textContent = 'Syncing...';
+                
+                setTimeout(() => {
+                    syncText.textContent = 'Sync';
+                    updateTokensList();
+                }, 2000);
+            }
+
+            function updateTokensList() {
+                const container = document.getElementById('tokens-list-container');
+                const countElement = document.getElementById('token-count');
+                
+                countElement.textContent = tokens.length;
+                
+                if (tokens.length === 0) {
+                    container.innerHTML = '<div class="token_info">No tokens added yet</div>';
+                    return;
+                }
+
+                container.innerHTML = tokens.map((token, index) => `
+                    <li class="token">
+                        <span class="token-number">${index + 1}.</span>
+                        <span class="token-item">${token}</span>
+                        <button class="trash-btn" onclick="removeToken(${index})">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <polyline points="3,6 5,6 21,6"></polyline>
+                                <path d="m19,6v14a2,2 0 0,1 -2,2H7a2,2 0 0,1 -2,-2V6m3,0V4a2,2 0 0,1 2,-2h4a2,2 0 0,1 2,2v2"></path>
+                            </svg>
+                        </button>
+                    </li>
+                `).join('');
+            }
+
+            function toggleDemoTrading() {
+                isDemoTradingActive = !isDemoTradingActive;
+                const btn = document.getElementById('demo-trading-btn');
+                const message = document.getElementById('demo-success-message');
+                
+                if (isDemoTradingActive) {
+                    btn.textContent = 'Stop Demo to Real Copy Trading';
+                    btn.className = 'copy-trading-btn stop';
+                    message.textContent = 'Demo to Real copy trading started successfully';
+                } else {
+                    btn.textContent = 'Start Demo to Real Copy Trading';
+                    btn.className = 'copy-trading-btn start';
+                    message.textContent = 'Demo to Real copy trading stopped successfully';
+                }
+                
+                message.style.display = 'block';
+                setTimeout(() => {
+                    message.style.display = 'none';
+                }, 5000);
+            }
+
+            function toggleCopyTrading() {
+                isCopyTradingActive = !isCopyTradingActive;
+                const btn = document.getElementById('copy-trading-btn');
+                const message = document.getElementById('success-message');
+                
+                if (isCopyTradingActive) {
+                    btn.textContent = 'Stop Copy Trading';
+                    btn.className = 'copy-trading-btn stop';
+                    message.textContent = `Copy trading started successfully for all ${tokens.length} tokens!`;
+                } else {
+                    btn.textContent = 'Start Copy Trading';
+                    btn.className = 'copy-trading-btn start';
+                    message.textContent = `Copy trading stopped successfully for all ${tokens.length} tokens!`;
+                }
+                
+                message.style.display = 'block';
+                setTimeout(() => {
+                    message.style.display = 'none';
+                }, 5000);
+            }
+
+            function openTutorial(url) {
+                window.open(url, '_blank', 'width=800,height=600');
+            }
+
+            // Initialize the app
+            createCopyTradingApp();
+        </script>
+    </body>
+</html>

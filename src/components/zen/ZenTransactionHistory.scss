@@ -1,0 +1,519 @@
+// Zen Transaction History Component Styles
+// Teal, Maroon, and White Theme
+
+.zen-transaction-history {
+    background: #1a2332;
+    border: 1px solid rgb(20 184 166 / 30%);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 20%);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: fit-content;
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 16px;
+        border-bottom: 1px solid rgb(20 184 166 / 30%);
+        cursor: pointer;
+        user-select: none;
+
+        @media (width > 768px) {
+            cursor: default;
+            pointer-events: none;
+        }
+    }
+
+    &__header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex: 1;
+        pointer-events: none;
+    }
+
+    &__toggle {
+        display: none;
+        background: transparent;
+        border: none;
+        color: #14b8a6;
+        padding: 4px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+
+        @media (width <= 768px) {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        &--collapsed {
+            transform: rotate(-90deg);
+        }
+    }
+
+    &__title {
+        font-size: 20px;
+        font-weight: 600;
+        color: #14b8a6;
+        margin: 0;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        max-height: 2000px;
+        overflow: hidden;
+        transition:
+            max-height 0.3s ease,
+            opacity 0.3s ease;
+        opacity: 1;
+
+        &--collapsed {
+            max-height: 0;
+            opacity: 0;
+            margin-top: 0;
+
+            // On mobile, don't collapse since it's handled by parent
+            @media (width <= 768px) {
+                max-height: 2000px;
+                opacity: 1;
+                margin-top: 0;
+            }
+        }
+    }
+
+    &__actions {
+        display: flex;
+        gap: 8px;
+    }
+
+    &__action-btn {
+        background: rgb(255 255 255 / 10%);
+        border: 2px solid rgb(20 184 166 / 30%);
+        border-radius: 8px;
+        padding: 8px 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        &:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        &--reset {
+            color: #991b1b;
+
+            &:hover:not(:disabled) {
+                border-color: #991b1b;
+                background: rgb(153 27 27 / 10%);
+            }
+        }
+
+        &--export {
+            color: #14b8a6;
+
+            &:hover:not(:disabled) {
+                border-color: #14b8a6;
+                background: rgb(20 184 166 / 10%);
+            }
+        }
+    }
+
+    &__summary {
+        background: rgb(255 255 255 / 5%);
+        border: 1px solid rgb(20 184 166 / 20%);
+        border-radius: 8px;
+        padding: 16px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+    }
+
+    &__summary-item {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        &--full {
+            grid-column: 1 / -1;
+            padding-top: 12px;
+            border-top: 1px solid rgb(20 184 166 / 30%);
+        }
+    }
+
+    &__summary-label {
+        font-size: 11px;
+        color: #cbd5e1;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    &__summary-value {
+        font-size: 18px;
+        font-weight: 700;
+        color: #fff;
+
+        &--large {
+            font-size: 24px;
+        }
+
+        &--success {
+            color: #10b981;
+        }
+
+        &--danger {
+            color: #991b1b;
+        }
+    }
+
+    &__filter {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    &__filter-btn {
+        flex: 1;
+        min-width: 80px;
+        background: rgb(255 255 255 / 10%);
+        border: 2px solid rgb(20 184 166 / 30%);
+        border-radius: 8px;
+        padding: 10px 16px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #cbd5e1;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+            border-color: #14b8a6;
+            color: #14b8a6;
+        }
+
+        &--active {
+            background: rgb(20 184 166 / 10%);
+            border-color: #14b8a6;
+            color: #14b8a6;
+        }
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        overflow-y: auto;
+        max-height: 60vh;
+        min-height: 200px;
+        padding-right: 4px;
+        scroll-behavior: smooth;
+
+        /* Custom scrollbar */
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: rgb(255 255 255 / 10%);
+            border-radius: 3px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: #14b8a6;
+            border-radius: 3px;
+
+            &:hover {
+                background: #5eead4;
+            }
+        }
+    }
+
+    &__empty {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 48px 24px;
+        color: #cbd5e1;
+        text-align: center;
+
+        svg {
+            margin-bottom: 16px;
+            color: #14b8a6;
+        }
+
+        p {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0 0 8px;
+            color: #fff;
+        }
+
+        small {
+            font-size: 13px;
+            color: #cbd5e1;
+        }
+    }
+
+    &__item {
+        background: rgb(255 255 255 / 5%);
+        border: 1px solid rgb(20 184 166 / 20%);
+        border-radius: 8px;
+        padding: 12px;
+        border-left: 3px solid transparent;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background: rgb(255 255 255 / 8%);
+            border-color: rgb(20 184 166 / 40%);
+        }
+
+        &--won {
+            border-left-color: #10b981;
+        }
+
+        &--lost {
+            border-left-color: #991b1b;
+        }
+
+        &--pending {
+            border-left-color: #14b8a6;
+            animation: zen-pulse-pending 2s infinite;
+        }
+
+        &--error {
+            border-left-color: #dc2626;
+        }
+
+        &--cancelled {
+            border-left-color: #6b7280;
+        }
+    }
+
+    &__item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+
+    &__item-strategy {
+        font-size: 13px;
+        font-weight: 600;
+        color: #14b8a6;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    &__item-time {
+        font-size: 11px;
+        color: #cbd5e1;
+        font-family: 'Courier New', monospace;
+    }
+
+    &__item-details {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 8px;
+    }
+
+    &__item-market {
+        font-size: 12px;
+        color: #fff;
+        font-weight: 500;
+    }
+
+    &__item-spots {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        color: #cbd5e1;
+        font-family: 'Courier New', monospace;
+
+        svg {
+            opacity: 0.5;
+            color: #14b8a6;
+        }
+    }
+
+    &__item-stake {
+        font-size: 12px;
+        color: #cbd5e1;
+    }
+
+    &__item-contract {
+        font-size: 11px;
+        color: #14b8a6;
+        font-family: 'Courier New', monospace;
+        opacity: 0.8;
+    }
+
+    &__item-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 8px;
+        border-top: 1px solid rgb(20 184 166 / 20%);
+    }
+
+    &__item-outcome {
+        font-size: 12px;
+        font-weight: 700;
+        padding: 4px 8px;
+        border-radius: 4px;
+
+        &--won {
+            background: rgb(16 185 129 / 20%);
+            color: #10b981;
+        }
+
+        &--lost {
+            background: rgb(153 27 27 / 20%);
+            color: #991b1b;
+        }
+
+        &--pending {
+            background: rgb(20 184 166 / 20%);
+            color: #14b8a6;
+        }
+
+        &--error {
+            background: rgb(220 38 38 / 20%);
+            color: #dc2626;
+        }
+
+        &--cancelled {
+            background: rgb(107 114 128 / 20%);
+            color: #6b7280;
+        }
+    }
+
+    &__item-profit {
+        font-size: 14px;
+        font-weight: 700;
+
+        &--positive {
+            color: #10b981;
+        }
+
+        &--negative {
+            color: #991b1b;
+        }
+    }
+
+    &__item-error {
+        margin-top: 8px;
+        padding: 8px;
+        background: rgb(220 38 38 / 10%);
+        border: 1px solid rgb(220 38 38 / 30%);
+        border-radius: 6px;
+        font-size: 11px;
+        color: #dc2626;
+        line-height: 1.4;
+    }
+}
+
+// Responsive
+@media (width <= 768px) {
+    .zen-transaction-history {
+        padding: 20px;
+        padding-bottom: 24px;
+        max-height: none;
+        margin-bottom: 24px;
+
+        &__summary {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        &__filter {
+            flex-direction: column;
+        }
+
+        &__filter-btn {
+            flex: none;
+        }
+
+        &__list {
+            max-height: 50vh;
+            margin-bottom: 16px;
+        }
+    }
+}
+
+// Pulse animation for pending transactions
+@keyframes zen-pulse-pending {
+    0%,
+    100% {
+        border-left-color: #14b8a6;
+        opacity: 1;
+    }
+
+    50% {
+        border-left-color: #5eead4;
+        opacity: 0.7;
+    }
+}
+
+// Enhanced Profit Display Styles
+.zen-transaction-history__item-profit-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.zen-transaction-history__item-breakdown {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    opacity: 0.7;
+    font-size: 10px;
+    
+    small {
+        color: #c2c2c2;
+        font-weight: 400;
+    }
+}
+
+.zen-transaction-history__summary-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 4px;
+    
+    small {
+        color: #c2c2c2;
+        font-size: 11px;
+        font-weight: 400;
+        opacity: 0.8;
+    }
+}
+
+// Enhanced profit colors (using existing nested selectors above)
+
+// Responsive enhancements for profit display
+@media (width <= 768px) {
+    .zen-transaction-history__item-breakdown {
+        font-size: 9px;
+    }
+    
+    .zen-transaction-history__summary-details {
+        small {
+            font-size: 10px;
+        }
+    }
+}

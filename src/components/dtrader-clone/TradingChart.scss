@@ -1,0 +1,119 @@
+.trading-chart {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+
+    .chart-header {
+        height: 60px;
+        padding: 0 20px;
+        border-bottom: 1px solid #e5e5e5;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+        background-color: #f8f9fa;
+
+        .chart-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+
+            h3 {
+                margin: 0;
+                font-size: 18px;
+                font-weight: 600;
+                color: #333;
+            }
+
+            .current-price {
+                font-size: 16px;
+                font-weight: 600;
+                color: #f59e0b;
+                padding: 4px 8px;
+                background-color: rgba(245, 158, 11, 0.1);
+                border-radius: 4px;
+            }
+        }
+
+        .chart-controls {
+            .timeframe-selector {
+                display: flex;
+                gap: 2px;
+                background-color: #e5e5e5;
+                border-radius: 6px;
+                padding: 2px;
+
+                .timeframe-btn {
+                    padding: 6px 12px;
+                    border: none;
+                    background-color: transparent;
+                    color: #666;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 12px;
+                    font-weight: 500;
+                    transition: all 0.2s ease;
+
+                    &:hover {
+                        color: #333;
+                        background-color: #d1d5db;
+                    }
+
+                    &.active {
+                        color: #fff;
+                        background-color: #3b82f6;
+                    }
+                }
+            }
+        }
+    }
+
+    .chart-container {
+        flex: 1;
+        padding: 10px;
+        overflow: hidden;
+        position: relative;
+        background-color: #ffffff;
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            background-color: #ffffff;
+            border: 1px solid #e5e5e5;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .trading-chart {
+        .chart-header {
+            padding: 0 15px;
+            height: 50px;
+            
+            .chart-title {
+                gap: 10px;
+                
+                h3 {
+                    font-size: 16px;
+                }
+                
+                .current-price {
+                    font-size: 14px;
+                }
+            }
+            
+            .chart-controls .timeframe-selector {
+                .timeframe-btn {
+                    padding: 4px 8px;
+                    font-size: 11px;
+                }
+            }
+        }
+        
+        .chart-container {
+            padding: 5px;
+        }
+    }
+}

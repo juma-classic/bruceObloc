@@ -1,0 +1,280 @@
+.trade-indicators {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 999;
+
+    .trade-flag {
+        position: absolute;
+        pointer-events: auto;
+        animation: slide-in 0.3s ease-out;
+        
+        &.winning {
+            .flag-content {
+                border-left: 4px solid #00a652;
+                background: rgba(0, 166, 82, 0.1);
+            }
+            
+            .flag-pole {
+                background: #00a652;
+            }
+            
+            .price-level-line {
+                border-color: #00a652;
+            }
+        }
+        
+        &.losing {
+            .flag-content {
+                border-left: 4px solid #ec3f3f;
+                background: rgba(236, 63, 63, 0.1);
+            }
+            
+            .flag-pole {
+                background: #ec3f3f;
+            }
+            
+            .price-level-line {
+                border-color: #ec3f3f;
+            }
+        }
+        
+        &.won {
+            .flag-content {
+                border-left: 4px solid #00a652;
+                background: rgba(0, 166, 82, 0.15);
+            }
+            
+            .flag-pole {
+                background: #00a652;
+            }
+            
+            .price-level-line {
+                border-color: #00a652;
+            }
+        }
+        
+        &.lost {
+            .flag-content {
+                border-left: 4px solid #ec3f3f;
+                background: rgba(236, 63, 63, 0.15);
+            }
+            
+            .flag-pole {
+                background: #ec3f3f;
+            }
+            
+            .price-level-line {
+                border-color: #ec3f3f;
+            }
+        }
+    }
+
+    .flag-pole {
+        position: absolute;
+        right: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 3px;
+        background: #666;
+        border-radius: 2px;
+    }
+    
+    .price-level-line {
+        position: absolute;
+        right: 120px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100px;
+        height: 1px;
+        border-top: 2px dotted #666;
+        opacity: 0.7;
+    }
+
+    .flag-content {
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 12px;
+        min-width: 200px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        backdrop-filter: blur(10px);
+        font-size: 12px;
+        
+        .flag-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            
+            .trade-icon {
+                font-size: 16px;
+            }
+            
+            .trade-type {
+                flex: 1;
+                font-size: 13px;
+                color: #333;
+            }
+            
+            .trade-status-indicator {
+                font-size: 14px;
+                font-weight: bold;
+                
+                &:contains('✓') {
+                    color: #00a652;
+                }
+                
+                &:contains('✗') {
+                    color: #ec3f3f;
+                }
+            }
+        }
+        
+        .flag-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            
+            .price-info,
+            .stake-info,
+            .payout-info,
+            .time-info {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                
+                .label {
+                    color: #666;
+                    font-size: 11px;
+                    font-weight: 500;
+                }
+                
+                .value {
+                    color: #333;
+                    font-weight: 600;
+                    font-size: 11px;
+                }
+            }
+        }
+        
+        .progress-bar {
+            margin-top: 8px;
+            height: 4px;
+            background: #f0f0f0;
+            border-radius: 2px;
+            overflow: hidden;
+            
+            .progress-fill {
+                height: 100%;
+                background: linear-gradient(90deg, #00a652, #4caf50);
+                border-radius: 2px;
+                transition: width 0.3s ease;
+            }
+        }
+    }
+}
+
+// Dark mode support
+.dark-mode {
+    .trade-indicators {
+        .flag-content {
+            background: rgba(45, 55, 72, 0.95);
+            border-color: #4a5568;
+            color: #e2e8f0;
+            
+            .trade-type {
+                color: #e2e8f0;
+            }
+            
+            .label {
+                color: #a0aec0;
+            }
+            
+            .value {
+                color: #e2e8f0;
+            }
+        }
+        
+        .flag-pole {
+            background: #a0aec0;
+        }
+        
+        .price-level-line {
+            border-color: #a0aec0;
+        }
+        
+        &.winning {
+            .flag-pole,
+            .price-level-line {
+                background: #00a652;
+                border-color: #00a652;
+            }
+        }
+        
+        &.losing {
+            .flag-pole,
+            .price-level-line {
+                background: #ec3f3f;
+                border-color: #ec3f3f;
+            }
+        }
+    }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+    .trade-indicators {
+        .flag-content {
+            min-width: 180px;
+            padding: 10px;
+            font-size: 11px;
+            
+            .flag-header {
+                .trade-icon {
+                    font-size: 14px;
+                }
+                
+                .trade-type {
+                    font-size: 12px;
+                }
+            }
+            
+            .flag-details {
+                gap: 4px;
+                
+                .label,
+                .value {
+                    font-size: 10px;
+                }
+            }
+        }
+        
+        .flag-pole {
+            width: 15px;
+            height: 2px;
+        }
+        
+        .price-level-line {
+            width: 80px;
+            right: 95px;
+        }
+    }
+}
+
+// Animations
+@keyframes slide-in {
+    from {
+        transform: translateY(-50%) translateX(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(-50%) translateX(0);
+        opacity: 1;
+    }
+}

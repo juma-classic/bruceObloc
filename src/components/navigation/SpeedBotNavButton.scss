@@ -1,0 +1,128 @@
+.speed-bot-nav-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgb(255 255 255 / 20%), transparent);
+        transition: left 0.5s ease;
+    }
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgb(255 107 107 / 30%);
+
+        &:before {
+            left: 100%;
+        }
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    &.active {
+        background: linear-gradient(135deg, #ff4757 0%, #c44569 100%);
+        box-shadow: 0 4px 15px rgb(255 71 87 / 40%);
+    }
+
+    .button-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .button-text {
+        font-weight: 600;
+    }
+
+    .active-indicator {
+        position: absolute;
+        bottom: -2px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 20px;
+        height: 3px;
+        background: #fff;
+        border-radius: 2px;
+    }
+
+    // Mobile variant
+    &--mobile {
+        width: 100%;
+        justify-content: flex-start;
+        padding: 1rem;
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+        border-radius: 12px;
+        margin: 0.5rem 0;
+
+        .button-text {
+            font-size: 1rem;
+        }
+    }
+
+    // Sidebar variant
+    &--sidebar {
+        width: 100%;
+        justify-content: flex-start;
+        padding: 0.875rem 1.25rem;
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+        border-radius: 10px;
+        margin: 0.25rem 0;
+    }
+
+    // Header variant (default)
+    &--header {
+        padding: 0.75rem 1.5rem;
+        border-radius: 25px;
+        font-size: 0.9rem;
+    }
+}
+
+// Dark mode support
+.theme--dark {
+    .speed-bot-nav-button {
+        background: linear-gradient(135deg, #ff4757 0%, #c44569 100%);
+
+        &:hover {
+            box-shadow: 0 8px 25px rgb(255 71 87 / 40%);
+        }
+
+        &.active {
+            background: linear-gradient(135deg, #ff3742 0%, #b33951 100%);
+        }
+    }
+}
+
+// Animation for speed effect
+@keyframes speed-pulse {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.speed-bot-nav-button:hover .button-icon {
+    animation: speed-pulse 0.6s ease-in-out;
+}

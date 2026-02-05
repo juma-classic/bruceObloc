@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trader Master - DTrader Manual</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0e0e0e;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Header */
+        .dtrader-header {
+            height: 60px;
+            background-color: #1a1a1a;
+            border-bottom: 1px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ff444f;
+        }
+
+        .account-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .balance {
+            font-size: 16px;
+            font-weight: 600;
+            color: #4bb543;
+        }
+
+        .demo-badge {
+            background-color: #ff444f;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Main Content Layout */
+        .dtrader-content {
+            display: grid;
+            grid-template-columns: 250px 1fr 320px;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background-color: #1a1a1a;
+            border-right: 1px solid #333;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .sidebar h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ccc;
+            margin: 0 0 15px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar h4 {
+            font-size: 12px;
+            font-weight: 500;
+            color: #999;
+            margin: 15px 0 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .market-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 2px;
+        }
+
+        .market-item:hover {
+            background-color: #2a2a2a;
+        }
+
+        .market-item.active {
+            background-color: #ff444f;
+            color: white;
+        }
+
+        .market-symbol {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .market-price {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .price {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .change {
+            font-size: 10px;
+            font-weight: 500;
+        }
+
+        .change.positive {
+            color: #4bb543;
+        }
+
+        .change.negative {
+            color: #ff444f;
+        }
+
+        /* Main Content */
+        .main-content {
+            background-color: #0e0e0e;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chart-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .symbol-info h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .current-price {
+            font-size: 20px;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .price-change {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .timeframe-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        .timeframe-btn {
+            padding: 8px 12px;
+            background-color: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 6px;
+            color: #ccc;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .timeframe-btn:hover {
+            background-color: #3a3a3a;
+        }
+
+        .timeframe-btn.active {
+            background-color: #ff444f;
+            border-color: #ff444f;
+            color: white;
+        }
+
+        .chart-container {
+            flex: 1;
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-placeholder {
+            text-align: center;
+            color: #666;
+        }
+
+        /* Trade Panel */
+        .trade-panel {
+            background-color: #1a1a1a;
+            border-left: 1px solid #333;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .trade-panel h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .trade-types {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .trade-type-btn {
+            padding: 10px;
+            background-color: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 6px;
+            color: #ccc;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .trade-type-btn:hover {
+            background-color: #3a3a3a;
+        }
+
+        .trade-type-btn.active {
+            background-color: #ff444f;
+            border-color: #ff444f;
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            color: #ccc;
+            margin-bottom: 5px;
+        }
+
+        .form-group select,
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            background-color: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .stake-input {
+            position: relative;
+        }
+
+        .currency {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ccc;
+            font-size: 14px;
+        }
+
+        .stake-input input {
+            padding-left: 25px;
+        }
+
+        .payout-info {
+            background-color: #2a2a2a;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .payout-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .payout-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .payout-amount,
+        .profit-amount {
+            font-weight: 600;
+            color: #4bb543;
+        }
+
+        .purchase-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .purchase-btn {
+            padding: 15px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .purchase-btn.higher {
+            background-color: #4bb543;
+            color: white;
+        }
+
+        .purchase-btn.higher:hover {
+            background-color: #3a9a35;
+        }
+
+        .purchase-btn.lower {
+            background-color: #ff444f;
+            color: white;
+        }
+
+        .purchase-btn.lower:hover {
+            background-color: #e63946;
+        }
+
+        .purchase-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Positions Panel */
+        .positions-panel {
+            background-color: #1a1a1a;
+            border-top: 1px solid #333;
+            padding: 15px 20px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .positions-panel h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .no-positions {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+        }
+
+        .position-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #333;
+            font-size: 12px;
+        }
+
+        .position-item:last-child {
+            border-bottom: none;
+        }
+
+        .position-direction.higher {
+            color: #4bb543;
+        }
+
+        .position-direction.lower {
+            color: #ff444f;
+        }
+
+        .position-pnl.profit {
+            color: #4bb543;
+        }
+
+        .position-pnl.loss {
+            color: #ff444f;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .dtrader-content {
+                grid-template-columns: 1fr 300px;
+            }
+
+            .sidebar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dtrader-content {
+                grid-template-columns: 1fr;
+            }
+
+            .trade-panel {
+                border-left: none;
+                border-top: 1px solid #333;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dtrader-manual">
+        <!-- Header -->
+        <header class="dtrader-header">
+            <div class="header-left">
+                <div class="logo">
+                    <span class="logo-text">Trader Master</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="account-info">
+                    <span class="balance">$10,000.00</span>
+                    <span class="demo-badge">DEMO</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="dtrader-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="markets-section">
+                    <h3>Markets</h3>
+                    <div class="market-category">
+                        <h4>Forex</h4>
+                        <div class="market-item active">
+                            <div class="market-symbol">EUR/USD</div>
+                            <div class="market-price">
+                                <span class="price">1.0845</span>
+                                <span class="change positive">+0.11%</span>
+                            </div>
+                        </div>
+                        <div class="market-item">
+                            <div class="market-symbol">GBP/USD</div>
+                            <div class="market-price">
+                                <span class="price">1.2634</span>
+                                <span class="change negative">-0.18%</span>
+                            </div>
+                        </div>
+                        <div class="market-item">
+                            <div class="market-symbol">USD/JPY</div>
+                            <div class="market-price">
+                                <span class="price">149.85</span>
+                                <span class="change positive">+0.30%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="market-category">
+                        <h4>Cryptocurrencies</h4>
+                        <div class="market-item">
+                            <div class="market-symbol">BTC/USD</div>
+                            <div class="market-price">
+                                <span class="price">42350.50</span>
+                                <span class="change positive">+3.04%</span>
+                            </div>
+                        </div>
+                        <div class="market-item">
+                            <div class="market-symbol">ETH/USD</div>
+                            <div class="market-price">
+                                <span class="price">2485.75</span>
+                                <span class="change negative">-3.32%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Chart Area -->
+                <div class="chart-area">
+                    <div class="chart-header">
+                        <div class="symbol-info">
+                            <h2>EUR/USD</h2>
+                            <div class="price-info">
+                                <span class="current-price">1.0845</span>
+                                <span class="price-change positive">+0.11%</span>
+                            </div>
+                        </div>
+                        <div class="timeframe-buttons">
+                            <button class="timeframe-btn active">1M</button>
+                            <button class="timeframe-btn">5M</button>
+                            <button class="timeframe-btn">15M</button>
+                            <button class="timeframe-btn">1H</button>
+                            <button class="timeframe-btn">4H</button>
+                            <button class="timeframe-btn">1D</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <div class="chart-placeholder">
+                            <div>Chart for EUR/USD - 1M</div>
+                            <br />
+                            <small>Real-time price: 1.0845</small>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Trade Panel -->
+            <aside class="trade-panel">
+                <div class="trade-section">
+                    <h3>Trade</h3>
+                    
+                    <!-- Trade Type Selection -->
+                    <div class="trade-types">
+                        <button class="trade-type-btn active">Rise/Fall</button>
+                        <button class="trade-type-btn">Higher/Lower</button>
+                        <button class="trade-type-btn">Touch/No Touch</button>
+                        <button class="trade-type-btn">In/Out</button>
+                    </div>
+
+                    <!-- Market Selection -->
+                    <div class="form-group">
+                        <label>Market</label>
+                        <select>
+                            <option>EUR/USD - Euro vs US Dollar</option>
+                            <option>GBP/USD - British Pound vs US Dollar</option>
+                            <option>USD/JPY - US Dollar vs Japanese Yen</option>
+                        </select>
+                    </div>
+
+                    <!-- Duration Selection -->
+                    <div class="form-group">
+                        <label>Duration</label>
+                        <select>
+                            <option>5 Ticks</option>
+                            <option>10 Ticks</option>
+                            <option>1 Minute</option>
+                            <option>5 Minutes</option>
+                            <option>15 Minutes</option>
+                        </select>
+                    </div>
+
+                    <!-- Stake Amount -->
+                    <div class="form-group">
+                        <label>Stake</label>
+                        <div class="stake-input">
+                            <span class="currency">$</span>
+                            <input type="number" min="1" max="1000" value="10">
+                        </div>
+                    </div>
+
+                    <!-- Payout Display -->
+                    <div class="payout-info">
+                        <div class="payout-row">
+                            <span>Payout:</span>
+                            <span class="payout-amount">$18.50</span>
+                        </div>
+                        <div class="payout-row">
+                            <span>Profit:</span>
+                            <span class="profit-amount">$8.50</span>
+                        </div>
+                    </div>
+
+                    <!-- Purchase Buttons -->
+                    <div class="purchase-buttons">
+                        <button class="purchase-btn higher">HIGHER</button>
+                        <button class="purchase-btn lower">LOWER</button>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Positions Panel -->
+        <div class="positions-panel">
+            <h3>Open Positions (0)</h3>
+            <div class="positions-list">
+                <div class="no-positions">No open positions</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple interactivity for demonstration
+        document.addEventListener('DOMContentLoaded', function() {
+            // Market selection
+            const marketItems = document.querySelectorAll('.market-item');
+            marketItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    marketItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const symbol = this.querySelector('.market-symbol').textContent;
+                    const price = this.querySelector('.price').textContent;
+                    
+                    document.querySelector('.symbol-info h2').textContent = symbol;
+                    document.querySelector('.current-price').textContent = price;
+                    document.querySelector('.chart-placeholder div').textContent = `Chart for ${symbol} - 1M`;
+                    document.querySelector('.chart-placeholder small').textContent = `Real-time price: ${price}`;
+                });
+            });
+
+            // Timeframe selection
+            const timeframeBtns = document.querySelectorAll('.timeframe-btn');
+            timeframeBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    timeframeBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const timeframe = this.textContent;
+                    const symbol = document.querySelector('.symbol-info h2').textContent;
+                    document.querySelector('.chart-placeholder div').textContent = `Chart for ${symbol} - ${timeframe}`;
+                });
+            });
+
+            // Trade type selection
+            const tradeTypeBtns = document.querySelectorAll('.trade-type-btn');
+            tradeTypeBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    tradeTypeBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // Purchase buttons
+            const purchaseBtns = document.querySelectorAll('.purchase-btn');
+            purchaseBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const direction = this.classList.contains('higher') ? 'HIGHER' : 'LOWER';
+                    alert(`Trade placed: ${direction} for EUR/USD`);
+                });
+            });
+
+            // Simulate price updates
+            setInterval(() => {
+                const currentPriceEl = document.querySelector('.current-price');
+                const currentPrice = parseFloat(currentPriceEl.textContent);
+                const change = (Math.random() - 0.5) * 0.002;
+                const newPrice = (currentPrice + change).toFixed(4);
+                
+                currentPriceEl.textContent = newPrice;
+                document.querySelector('.chart-placeholder small').textContent = `Real-time price: ${newPrice}`;
+                
+                const changePercent = ((change / currentPrice) * 100).toFixed(2);
+                const changeEl = document.querySelector('.price-change');
+                changeEl.textContent = `${change >= 0 ? '+' : ''}${changePercent}%`;
+                changeEl.className = `price-change ${change >= 0 ? 'positive' : 'negative'}`;
+            }, 3000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,507 @@
+@use 'components/shared/styles/mixins' as *;
+
+/**
+* @define -panel
+**/
+.run-panel {
+    height: 0;
+
+    &__container {
+        height: calc(var(--bot-content-height) * 0.7) !important; /* Increased height from 0.5 to 0.7 for more space */
+        top: 2rem !important; /* Moved higher - was 4rem, now 2rem for more space */
+        width: 36.6rem !important;
+        left: 2rem !important; /* Move to left side instead of right */
+        right: auto !important; /* Remove right positioning */
+
+        &--mobile {
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            z-index: var(--zindex-drawer);
+
+            &-closed {
+                position: unset;
+            }
+        }
+    }
+
+    &__tile {
+        @include flex-center;
+
+        flex-direction: column;
+        height: 100%;
+
+        &-title {
+            min-height: 1.8rem;
+            margin-bottom: 4px;
+
+            @include typeface(--small-center-bold-black, none);
+        }
+
+        &-content {
+            height: 18px;
+            margin-bottom: 4px;
+
+            @include typeface(--small-center-normal-black, none);
+        }
+    }
+
+    &__stat {
+        @include flex-center(flex-start, flex-end);
+
+        flex-direction: column;
+        width: 35rem;
+        background-color: var(--general-section-2);
+        flex-shrink: 0; /* Prevent statistics from shrinking */
+        max-height: 100px; /* Reduced from 120px to 100px for more content space */
+        margin-bottom: 80px !important; /* Reduced from 100px to 80px */
+
+        @include mobile-or-tablet-screen {
+            margin: 0;
+            position: fixed;
+        }
+
+        &--info {
+            @include flex-center(center, flex-start);
+
+            width: 33%;
+            padding: 16px 0 2px;
+            cursor: pointer;
+            color: var(--text-general);
+            -webkit-tap-highlight-color: transparent;
+
+            &-item {
+                display: inline-block;
+                border-bottom: 1px dotted var(--text-general);
+            }
+        }
+
+        &--tiles {
+            width: 100%;
+            display: grid;
+            grid-template: 64px 64px / 1fr 1fr 1fr;
+        }
+
+        &-amount {
+            @include typeface(--small-center-normal-black, none);
+
+            &--positive {
+                font-weight: bold;
+                color: var(--text-profit-success);
+            }
+
+            &--negative {
+                font-weight: bold;
+                color: var(--text-loss-danger);
+            }
+        }
+
+        &--mobile {
+            width: 100%;
+            bottom: 0;
+        }
+    }
+
+    &__footer {
+        text-align: center;
+        position: fixed !important; /* Fixed to viewport instead of absolute */
+        bottom: 3rem !important; /* Reduced from 4rem to 3rem for more content space */
+        left: 2rem !important; /* Align with panel position */
+        width: 36.6rem !important; /* Match panel width */
+        height: 70px !important; /* Reduced height from 90px to 70px */
+        background: linear-gradient(
+            135deg,
+            rgb(15 23 42 / 95%) 0%,
+            rgb(30 41 59 / 95%) 100%
+        ) !important; /* Dark gradient background */
+
+        border: 2px solid #14b8a6 !important; /* Teal border to match site branding */
+        border-radius: 12px !important; /* More rounded corners */
+        z-index: 1001 !important; /* Even higher z-index to ensure visibility */
+        box-shadow:
+            0 8px 32px rgb(0 0 0 / 40%),
+            0 0 20px rgb(20 184 166 / 20%) !important; /* Enhanced shadow with teal glow */
+
+        pointer-events: auto !important; /* Ensure events are captured */
+        backdrop-filter: blur(10px) !important; /* Glass effect */
+
+        @include flex-center(center);
+
+        flex-direction: column;
+
+        /* Hide any duplicate footers that might appear */
+        &:not(:last-of-type) {
+            display: none !important;
+        }
+
+        &-button {
+            width: 280px !important; /* Slightly smaller to fit better */
+            height: 40px !important; /* Reduced height from 50px to 40px for more content space */
+            margin: 6px !important; /* Reduced margin from 8px to 6px */
+            background: linear-gradient(
+                135deg,
+                #0d9488 0%,
+                #14b8a6 100%
+            ) !important; /* Teal gradient matching site branding */
+
+            color: #fff !important; /* Pure white text - forced with high specificity */
+            font-weight: 700 !important; /* Bolder text */
+            font-size: 16px !important; /* Reduced from 18px to 16px */
+            border-radius: 8px !important; /* More rounded corners */
+            box-shadow:
+                0 4px 12px rgb(13 148 136 / 40%),
+                0 0 20px rgb(20 184 166 / 20%) !important; /* Teal glow effect */
+
+            cursor: pointer !important; /* Ensure button is clickable */
+            border: 2px solid rgb(255 255 255 / 20%) !important; /* Subtle white border */
+            text-transform: uppercase; /* Make text more prominent */
+            letter-spacing: 1px !important; /* Better letter spacing */
+            pointer-events: auto !important; /* Ensure button events work */
+            transition: all 0.3s ease !important; /* Smooth transitions */
+
+            /* Override shared button component styles - target all text elements */
+            .dc-btn__text,
+            .dc-btn__icon,
+            span,
+            & > * {
+                color: #fff !important;
+                text-decoration: none !important;
+            }
+
+            /* Ensure white text with maximum specificity */
+            &,
+            &:link,
+            &:visited,
+            &:focus,
+            &:active {
+                color: #fff !important;
+                text-decoration: none !important;
+            }
+
+            &:hover {
+                background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%) !important; /* Darker teal on hover */
+                color: #fff !important; /* Keep white text on hover */
+                transform: translateY(-2px) scale(1.02) !important; /* Lift effect */
+                box-shadow:
+                    0 6px 16px rgb(13 148 136 / 60%),
+                    0 0 30px rgb(20 184 166 / 30%) !important; /* Enhanced teal glow on hover */
+
+                border-color: rgb(255 255 255 / 40%) !important; /* Brighter border on hover */
+
+                /* Ensure white text on hover for all child elements */
+                .dc-btn__text,
+                .dc-btn__icon,
+                span,
+                & > * {
+                    color: #fff !important;
+                }
+            }
+
+            &:active {
+                transform: translateY(0) scale(1) !important; /* Reset on click */
+                box-shadow: 0 2px 8px rgb(13 148 136 / 40%) !important; /* Reduced shadow on click */
+                color: #fff !important; /* Ensure white text on active state */
+
+                /* Ensure white text on active for all child elements */
+                .dc-btn__text,
+                .dc-btn__icon,
+                span,
+                & > * {
+                    color: #fff !important;
+                }
+            }
+        }
+    }
+
+    &__content {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        overflow: hidden !important;
+        height: calc(100% - 40px); /* Increased available height by reducing reserved space from 60px to 40px */
+        padding-bottom: 80px !important; /* Reduced padding from 100px to 80px */
+
+        .dc-tabs {
+            &__item {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                padding: 0 0.8rem;
+            }
+        }
+    }
+
+    &__buttons {
+        display: inline-flex !important;
+        justify-content: space-between;
+        width: 67%;
+        margin-top: 1rem;
+        align-items: center;
+    }
+
+    &-tab {
+        &__content {
+            height: calc(100vh - 35rem); /* Increased available height by reducing from 42rem to 35rem */
+            overflow: auto; /* Allow scrolling if needed */
+
+            &--no-stat {
+                height: var(--drawer-content-height-no-stat);
+            }
+
+            &--mobile {
+                display: flex;
+                height: var(--drawer-content-height-mobile);
+                position: fixed;
+                bottom: 15.7rem;
+                width: 100vw;
+                padding: 0.4rem 0;
+            }
+
+            &--summary-tab {
+                padding: 0.8rem 1.6rem;
+                padding-bottom: 60px; /* Reduced padding from 80px to 60px */
+            }
+        }
+    }
+
+    &__clear-button {
+        @include mobile-or-tablet-screen {
+            position: absolute !important;
+            top: 0.5rem;
+            right: 1.6rem;
+            height: 2.6rem !important;
+            min-width: 8rem;
+        }
+    }
+}
+
+.controls {
+    &__section {
+        @include flex-center(space-between);
+
+        flex-direction: column;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: var(--general-main-1);
+        border-top: solid 2px var(--general-section-1);
+        z-index: 8;
+    }
+
+    &__buttons {
+        padding: 0.8rem 2.4rem;
+        height: 6rem;
+        display: flex;
+        width: inherit;
+
+        @include tablet-screen {
+            max-width: 60rem;
+            padding: 0.8rem 0;
+        }
+    }
+
+    &__stop-button,
+    &__run-button {
+        width: 40%;
+        border-radius: 4px 0 0 4px !important;
+    }
+
+    &__animation {
+        width: 100%;
+        height: 4rem;
+        border-radius: 0 4px 4px 0;
+    }
+}
+
+// animation
+.list {
+    &__animation {
+        &-enter {
+            height: 0;
+            transform: translateX(200%);
+
+            &-active {
+                height: auto;
+                transform: translateX(0%);
+                transition:
+                    height 500ms,
+                    transform 500ms;
+            }
+        }
+
+        &-exit {
+            opacity: 1;
+
+            &-active {
+                opacity: 0;
+                transition: opacity 300ms;
+            }
+        }
+    }
+}
+
+.db-self-exclusion {
+    font-size: var(--text-size-xs);
+    font-weight: normal;
+    line-height: 1.43;
+    color: var(--text-general);
+
+    &__content {
+        margin: 2.4rem;
+        margin-right: 1.4rem;
+        padding-right: 1rem;
+    }
+
+    & .dc-themed-scrollbars__track--vertical {
+        right: -0.2rem;
+    }
+
+    &__dialog {
+        max-height: 500px !important;
+        width: 460px;
+    }
+
+    &__footer {
+        height: 72px;
+        display: block;
+        position: fixed;
+        width: 100%;
+        left: 0;
+        bottom: 0;
+        padding: 1.4rem;
+        border-top: 2px solid var(--general-section-2);
+
+        @include mobile-or-tablet-screen {
+            position: absolute;
+            width: 100%;
+            bottom: 40px;
+            left: 0;
+
+            &--relative {
+                position: relative;
+                margin-top: 5rem;
+            }
+        }
+
+        &-btn-group {
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
+
+    &__info {
+        margin-bottom: 2rem;
+    }
+
+    &__limit-status {
+        margin: 1rem 0;
+
+        &--bold {
+            font-weight: 700;
+        }
+
+        &--danger {
+            font-weight: 700;
+            color: var(--status-danger);
+        }
+    }
+
+    &--danger {
+        color: var(--status-danger);
+    }
+
+    & .dc-btn {
+        margin-left: 0.8rem;
+    }
+}
+
+.limits__wrapper {
+    @include mobile-or-tablet-screen {
+        position: fixed;
+        z-index: 5;
+        width: 100%;
+        left: 0;
+        top: 0;
+        background: var(--general-main-1);
+
+        .db-self-exclusion {
+            height: calc(100vh - 40px);
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+
+            &__content {
+                margin-top: 56px;
+            }
+
+            &__form-group {
+                margin-bottom: 1.6rem;
+                display: flex;
+            }
+        }
+    }
+}
+
+.dc-modal__container_self-exclusion__modal {
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+    width: 440px !important;
+    height: 374px !important;
+}
+
+.statistics {
+    &__modal {
+        height: 28.4rem !important;
+        width: 44rem !important;
+        font-size: 1.6rem;
+        padding: 2.4rem;
+
+        &--mobile {
+            font-size: 1.6rem !important;
+        }
+
+        &-body {
+            height: calc(100vh - 40.6rem);
+            min-height: 10rem;
+            max-height: 45rem;
+
+            &--mobile {
+                padding: 0.6rem 0 1.6rem !important;
+                height: 40.4rem;
+            }
+
+            &--content {
+                margin-top: 1rem;
+
+                &-stake {
+                    margin-top: unset;
+                    font-weight: bold;
+                }
+            }
+        }
+
+        &-scrollbar {
+            padding-right: 1.2rem;
+        }
+    }
+}
+
+.dc-modal__container_statistics__modal {
+    @include mobile-or-tablet-screen {
+        width: 31.2rem !important;
+    }
+
+    .dc-modal-body {
+        padding: 2.4rem 1.2rem 2.4rem 2.4rem;
+    }
+}
+
+.dc-dialog {
+    &__button {
+        @include mobile-or-tablet-screen {
+            flex-basis: 100%;
+        }
+    }
+}

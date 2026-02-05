@@ -1,0 +1,105 @@
+/**
+ * Patel Signal Center Navigation Button Styles
+ */
+
+.patel-signal-center-nav-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    position: relative;
+
+    .button-icon {
+        font-size: 16px;
+    }
+
+    .button-text {
+        white-space: nowrap;
+    }
+
+    &:hover {
+        background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgb(139 92 246 / 30%);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    &.active {
+        background: linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%);
+        box-shadow: 0 2px 8px rgb(139 92 246 / 40%);
+
+        .active-indicator {
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 2px;
+            background: #fff;
+            border-radius: 1px;
+        }
+    }
+
+    // Header variant
+    &--header {
+        margin-left: 12px;
+    }
+
+    // Mobile variant
+    &--mobile {
+        width: 100%;
+        justify-content: flex-start;
+        padding: 12px 16px;
+        background: transparent;
+        color: inherit;
+        border-radius: 0;
+
+        &:hover {
+            background: rgb(139 92 246 / 10%);
+            transform: none;
+            box-shadow: none;
+        }
+
+        &.active {
+            background: rgb(139 92 246 / 20%);
+            box-shadow: none;
+
+            .active-indicator {
+                display: none;
+            }
+        }
+    }
+
+    // Sidebar variant
+    &--sidebar {
+        width: 100%;
+        justify-content: flex-start;
+        padding: 10px 12px;
+        margin-bottom: 4px;
+
+        &:hover {
+            background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+        }
+    }
+}
+
+// Responsive adjustments
+@media (width <= 768px) {
+    .patel-signal-center-nav-button {
+        &--header {
+            display: none; // Hide on mobile, use mobile menu instead
+        }
+    }
+}

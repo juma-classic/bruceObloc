@@ -1,0 +1,417 @@
+<xml xmlns="https://developers.google.com/blockly/xml" is_dbot="true" collection="false">
+  <variables>
+    <variable id="stake_var">Stake</variable>
+    <variable id="initial_stake_var">Initial Stake</variable>
+    <variable id="high_digit_count">High Digit Count</variable>
+    <variable id="trade_count">Trade Count</variable>
+    <variable id="max_trades">Max Trades</variable>
+    <variable id="bot_active">Bot Active</variable>
+    <variable id="last_digit">Last Digit</variable>
+  </variables>
+  <block type="trade_definition" id="trade_def_1" deletable="false" x="0" y="60">
+    <statement name="TRADE_OPTIONS">
+      <block type="trade_definition_market" id="market_1" deletable="false" movable="false">
+        <field name="MARKET_LIST">synthetic_index</field>
+        <field name="SUBMARKET_LIST">random_index</field>
+        <field name="SYMBOL_LIST">R_100</field>
+        <next>
+          <block type="trade_definition_tradetype" id="tradetype_1" deletable="false" movable="false">
+            <field name="TRADETYPECAT_LIST">digits</field>
+            <field name="TRADETYPE_LIST">overunder</field>
+            <next>
+              <block type="trade_definition_contracttype" id="contracttype_1" deletable="false" movable="false">
+                <field name="TYPE_LIST">DIGITUNDER</field>
+                <next>
+                  <block type="trade_definition_candleinterval" id="candle_1" deletable="false" movable="false">
+                    <field name="CANDLEINTERVAL_LIST">60</field>
+                    <next>
+                      <block type="trade_definition_restartbuysell" id="restart_1" deletable="false" movable="false">
+                        <field name="TIME_MACHINE_ENABLED">FALSE</field>
+                        <next>
+                          <block type="trade_definition_restartonerror" id="error_1" deletable="false" movable="false">
+                            <field name="RESTARTONERROR">TRUE</field>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+    <statement name="INITIALIZATION">
+      <block type="variables_set" id="set_initial_stake">
+        <field name="VAR" id="initial_stake_var">Initial Stake</field>
+        <value name="VALUE">
+          <block type="math_number" id="initial_stake_value">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+        <next>
+          <block type="variables_set" id="set_stake">
+            <field name="VAR" id="stake_var">Stake</field>
+            <value name="VALUE">
+              <block type="variables_get" id="get_initial_stake">
+                <field name="VAR" id="initial_stake_var">Initial Stake</field>
+              </block>
+            </value>
+            <next>
+              <block type="variables_set" id="set_high_digit_count">
+                <field name="VAR" id="high_digit_count">High Digit Count</field>
+                <value name="VALUE">
+                  <block type="math_number" id="high_digit_count_value">
+                    <field name="NUM">0</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="variables_set" id="set_trade_count">
+                    <field name="VAR" id="trade_count">Trade Count</field>
+                    <value name="VALUE">
+                      <block type="math_number" id="trade_count_value">
+                        <field name="NUM">0</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="variables_set" id="set_max_trades">
+                        <field name="VAR" id="max_trades">Max Trades</field>
+                        <value name="VALUE">
+                          <block type="math_number" id="max_trades_value">
+                            <field name="NUM">5</field>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="variables_set" id="set_bot_active">
+                            <field name="VAR" id="bot_active">Bot Active</field>
+                            <value name="VALUE">
+                              <block type="logic_boolean" id="bot_active_value">
+                                <field name="BOOL">TRUE</field>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="notify" id="notify_start">
+                                <field name="NOTIFICATION_TYPE">success</field>
+                                <value name="MESSAGE">
+                                  <block type="text" id="start_message">
+                                    <field name="TEXT">🎯 Digit Hunter Pro Started! Waiting for 2 high digits (7,8,9)...</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+    <statement name="SUBMARKET">
+      <block type="controls_if" id="check_bot_active">
+        <value name="IF0">
+          <block type="variables_get" id="get_bot_active">
+            <field name="VAR" id="bot_active">Bot Active</field>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="variables_set" id="set_last_digit">
+            <field name="VAR" id="last_digit">Last Digit</field>
+            <value name="VALUE">
+              <block type="math_modulo" id="get_digit">
+                <value name="DIVIDEND">
+                  <block type="read_details" id="read_tick">
+                    <field name="DETAIL_LIST">tick</field>
+                  </block>
+                </value>
+                <value name="DIVISOR">
+                  <block type="math_number" id="divisor_10">
+                    <field name="NUM">10</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <next>
+              <block type="controls_if" id="check_high_digit">
+                <value name="IF0">
+                  <block type="logic_operation" id="high_digit_condition">
+                    <field name="OP">OR</field>
+                    <value name="A">
+                      <block type="logic_operation" id="digit_7_or_8">
+                        <field name="OP">OR</field>
+                        <value name="A">
+                          <block type="logic_compare" id="digit_equals_7">
+                            <field name="OP">EQ</field>
+                            <value name="A">
+                              <block type="variables_get" id="get_last_digit_7">
+                                <field name="VAR" id="last_digit">Last Digit</field>
+                              </block>
+                            </value>
+                            <value name="B">
+                              <block type="math_number" id="number_7">
+                                <field name="NUM">7</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <value name="B">
+                          <block type="logic_compare" id="digit_equals_8">
+                            <field name="OP">EQ</field>
+                            <value name="A">
+                              <block type="variables_get" id="get_last_digit_8">
+                                <field name="VAR" id="last_digit">Last Digit</field>
+                              </block>
+                            </value>
+                            <value name="B">
+                              <block type="math_number" id="number_8">
+                                <field name="NUM">8</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="logic_compare" id="digit_equals_9">
+                        <field name="OP">EQ</field>
+                        <value name="A">
+                          <block type="variables_get" id="get_last_digit_9">
+                            <field name="VAR" id="last_digit">Last Digit</field>
+                          </block>
+                        </value>
+                        <value name="B">
+                          <block type="math_number" id="number_9">
+                            <field name="NUM">9</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <statement name="DO0">
+                  <block type="variables_set" id="increment_high_digit_count">
+                    <field name="VAR" id="high_digit_count">High Digit Count</field>
+                    <value name="VALUE">
+                      <block type="math_arithmetic" id="add_high_digit">
+                        <field name="OP">ADD</field>
+                        <value name="A">
+                          <block type="variables_get" id="get_high_digit_count_add">
+                            <field name="VAR" id="high_digit_count">High Digit Count</field>
+                          </block>
+                        </value>
+                        <value name="B">
+                          <block type="math_number" id="add_one">
+                            <field name="NUM">1</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="notify" id="notify_high_digit">
+                        <field name="NOTIFICATION_TYPE">info</field>
+                        <value name="MESSAGE">
+                          <block type="text_join" id="high_digit_message">
+                            <mutation items="3"></mutation>
+                            <value name="ADD0">
+                              <block type="text" id="high_digit_text1">
+                                <field name="TEXT">🔥 High digit detected: </field>
+                              </block>
+                            </value>
+                            <value name="ADD1">
+                              <block type="variables_get" id="get_last_digit_notify">
+                                <field name="VAR" id="last_digit">Last Digit</field>
+                              </block>
+                            </value>
+                            <value name="ADD2">
+                              <block type="text_join" id="count_message">
+                                <mutation items="2"></mutation>
+                                <value name="ADD0">
+                                  <block type="text" id="count_text">
+                                    <field name="TEXT"> | Count: </field>
+                                  </block>
+                                </value>
+                                <value name="ADD1">
+                                  <block type="variables_get" id="get_high_digit_count_notify">
+                                    <field name="VAR" id="high_digit_count">High Digit Count</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                      </block>
+                    </next>
+                  </block>
+                </statement>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </statement>
+    <statement name="PURCHASE_CONDITIONS">
+      <block type="logic_operation" id="purchase_condition">
+        <field name="OP">AND</field>
+        <value name="A">
+          <block type="logic_operation" id="bot_active_and_count">
+            <field name="OP">AND</field>
+            <value name="A">
+              <block type="variables_get" id="get_bot_active_purchase">
+                <field name="VAR" id="bot_active">Bot Active</field>
+              </block>
+            </value>
+            <value name="B">
+              <block type="logic_compare" id="high_digit_count_check">
+                <field name="OP">GTE</field>
+                <value name="A">
+                  <block type="variables_get" id="get_high_digit_count_purchase">
+                    <field name="VAR" id="high_digit_count">High Digit Count</field>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="math_number" id="required_count">
+                    <field name="NUM">2</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+          </block>
+        </value>
+        <value name="B">
+          <block type="logic_compare" id="trade_count_check">
+            <field name="OP">LT</field>
+            <value name="A">
+              <block type="variables_get" id="get_trade_count_purchase">
+                <field name="VAR" id="trade_count">Trade Count</field>
+              </block>
+            </value>
+            <value name="B">
+              <block type="variables_get" id="get_max_trades_purchase">
+                <field name="VAR" id="max_trades">Max Trades</field>
+              </block>
+            </value>
+          </block>
+        </value>
+      </block>
+    </statement>
+    <statement name="PURCHASE_PARAMETERS">
+      <block type="purchase" id="purchase_under_8">
+        <field name="PURCHASE_LIST">DIGITUNDER</field>
+        <value name="STAKE">
+          <block type="variables_get" id="get_stake_purchase">
+            <field name="VAR" id="stake_var">Stake</field>
+          </block>
+        </value>
+        <value name="DURATION">
+          <block type="math_number" id="duration_1_tick">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+        <value name="DURATION_UNIT">
+          <block type="text" id="duration_unit_tick">
+            <field name="TEXT">t</field>
+          </block>
+        </value>
+        <value name="PREDICTION">
+          <block type="math_number" id="prediction_8">
+            <field name="NUM">8</field>
+          </block>
+        </value>
+      </block>
+    </statement>
+    <statement name="AFTER_PURCHASE">
+      <block type="variables_set" id="increment_trade_count">
+        <field name="VAR" id="trade_count">Trade Count</field>
+        <value name="VALUE">
+          <block type="math_arithmetic" id="add_trade_count">
+            <field name="OP">ADD</field>
+            <value name="A">
+              <block type="variables_get" id="get_trade_count_after">
+                <field name="VAR" id="trade_count">Trade Count</field>
+              </block>
+            </value>
+            <value name="B">
+              <block type="math_number" id="add_one_trade">
+                <field name="NUM">1</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <next>
+          <block type="notify" id="notify_trade_executed">
+            <field name="NOTIFICATION_TYPE">success</field>
+            <value name="MESSAGE">
+              <block type="text_join" id="trade_executed_message">
+                <mutation items="4"></mutation>
+                <value name="ADD0">
+                  <block type="text" id="trade_text">
+                    <field name="TEXT">⚡ Trade </field>
+                  </block>
+                </value>
+                <value name="ADD1">
+                  <block type="variables_get" id="get_trade_count_message">
+                    <field name="VAR" id="trade_count">Trade Count</field>
+                  </block>
+                </value>
+                <value name="ADD2">
+                  <block type="text" id="of_text">
+                    <field name="TEXT">/</field>
+                  </block>
+                </value>
+                <value name="ADD3">
+                  <block type="variables_get" id="get_max_trades_message">
+                    <field name="VAR" id="max_trades">Max Trades</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <next>
+              <block type="controls_if" id="check_max_trades_reached">
+                <value name="IF0">
+                  <block type="logic_compare" id="max_trades_reached">
+                    <field name="OP">GTE</field>
+                    <value name="A">
+                      <block type="variables_get" id="get_trade_count_max_check">
+                        <field name="VAR" id="trade_count">Trade Count</field>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="variables_get" id="get_max_trades_max_check">
+                        <field name="VAR" id="max_trades">Max Trades</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <statement name="DO0">
+                  <block type="variables_set" id="deactivate_bot">
+                    <field name="VAR" id="bot_active">Bot Active</field>
+                    <value name="VALUE">
+                      <block type="logic_boolean" id="bot_active_false">
+                        <field name="BOOL">FALSE</field>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="notify" id="notify_bot_stopped">
+                        <field name="NOTIFICATION_TYPE">warn</field>
+                        <value name="MESSAGE">
+                          <block type="text" id="bot_stopped_message">
+                            <field name="TEXT">🛑 Digit Hunter Pro Completed! All 5 trades executed. Bot stopped.</field>
+                          </block>
+                        </value>
+                      </block>
+                    </next>
+                  </block>
+                </statement>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

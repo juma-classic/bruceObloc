@@ -1,0 +1,175 @@
+.tick-speed-nav-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    background: rgb(252 152 3 / 10%);
+    color: #fc9803;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+
+    .button-icon {
+        font-size: 1.1rem;
+        animation: pulse 2s infinite;
+    }
+
+    .button-text {
+        white-space: nowrap;
+    }
+
+    .active-indicator {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: #fc9803;
+        border-radius: 1px;
+    }
+
+    &:hover:not(.active) {
+        background: rgb(252 152 3 / 20%);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgb(252 152 3 / 30%);
+    }
+
+    &.active {
+        background: rgb(252 152 3 / 25%);
+        color: #fff;
+        box-shadow: 0 2px 8px rgb(252 152 3 / 40%);
+    }
+
+    // Header variant
+    &--header {
+        padding: 10px 18px;
+        font-size: 0.95rem;
+        border-radius: 10px;
+    }
+
+    // Mobile variant
+    &--mobile {
+        width: 100%;
+        justify-content: flex-start;
+        padding: 12px 16px;
+        background: transparent;
+        border-radius: 0;
+        border-bottom: 1px solid rgb(255 255 255 / 10%);
+
+        &:hover {
+            background: rgb(252 152 3 / 10%);
+            transform: none;
+            box-shadow: none;
+        }
+
+        &.active {
+            background: rgb(252 152 3 / 15%);
+        }
+    }
+
+    // Sidebar variant
+    &--sidebar {
+        width: 100%;
+        justify-content: flex-start;
+        padding: 12px 20px;
+        border-radius: 12px;
+        margin-bottom: 8px;
+    }
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.7;
+        transform: scale(1.1);
+    }
+}
+
+// Theme variations
+.theme--dark .tick-speed-nav-button {
+    &:not(.active) {
+        color: #fc9803;
+        background: rgb(252 152 3 / 8%);
+    }
+}
+
+.theme--light .tick-speed-nav-button {
+    &:not(.active) {
+        color: #e67e00;
+        background: rgb(230 126 0 / 10%);
+    }
+
+    &:hover:not(.active) {
+        background: rgb(230 126 0 / 15%);
+    }
+}
+
+.theme--ocean .tick-speed-nav-button {
+    &:not(.active) {
+        color: #00bcd4;
+        background: rgb(0 188 212 / 10%);
+    }
+
+    &:hover:not(.active) {
+        background: rgb(0 188 212 / 20%);
+        box-shadow: 0 4px 12px rgb(0 188 212 / 30%);
+    }
+
+    &.active {
+        background: rgb(0 188 212 / 25%);
+
+        .active-indicator {
+            background: #00bcd4;
+        }
+    }
+}
+
+.theme--sunset .tick-speed-nav-button {
+    &:not(.active) {
+        color: #ff6b35;
+        background: rgb(255 107 53 / 10%);
+    }
+
+    &:hover:not(.active) {
+        background: rgb(255 107 53 / 20%);
+        box-shadow: 0 4px 12px rgb(255 107 53 / 30%);
+    }
+
+    &.active {
+        background: rgb(255 107 53 / 25%);
+
+        .active-indicator {
+            background: #ff6b35;
+        }
+    }
+}
+
+.theme--pink .tick-speed-nav-button {
+    &:not(.active) {
+        color: #e91e63;
+        background: rgb(233 30 99 / 10%);
+    }
+
+    &:hover:not(.active) {
+        background: rgb(233 30 99 / 20%);
+        box-shadow: 0 4px 12px rgb(233 30 99 / 30%);
+    }
+
+    &.active {
+        background: rgb(233 30 99 / 25%);
+
+        .active-indicator {
+            background: #e91e63;
+        }
+    }
+}

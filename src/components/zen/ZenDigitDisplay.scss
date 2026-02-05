@@ -1,0 +1,335 @@
+.zen-digit-frequency-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgb(0 0 0 / 80%);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.zen-digit-frequency {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 600px;
+    width: 100%;
+    border: 2px solid #333;
+    box-shadow: 0 20px 40px rgb(0 0 0 / 50%);
+    color: #fff;
+}
+
+.frequency-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+
+    h3 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 700;
+        background: linear-gradient(135deg, #10b981, #3b82f6);
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+}
+
+.frequency-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.sample-size-select {
+    background: #333;
+    border: 1px solid #555;
+    border-radius: 8px;
+    color: #fff;
+    padding: 8px 12px;
+    font-size: 14px;
+    outline: none;
+    cursor: pointer;
+
+    &:hover {
+        border-color: #10b981;
+    }
+
+    &:focus {
+        border-color: #10b981;
+        box-shadow: 0 0 0 2px rgb(16 185 129 / 20%);
+    }
+}
+
+.close-button {
+    background: #ef4444;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: #dc2626;
+        transform: scale(1.1);
+    }
+}
+
+.frequency-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    padding: 15px;
+    background: rgb(255 255 255 / 5%);
+    border-radius: 10px;
+    border: 1px solid rgb(255 255 255 / 10%);
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.info-label {
+    font-size: 12px;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #10b981;
+}
+
+.digits-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    margin-bottom: 25px;
+    padding: 20px 0;
+}
+
+.digit-circle {
+    aspect-ratio: 1;
+    border: 3px solid #6b7280;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgb(255 255 255 / 5%);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+
+    &:hover {
+        transform: scale(1.05);
+        background: rgb(255 255 255 / 10%);
+    }
+
+    &.hot {
+        border-color: #10b981;
+        background: rgb(16 185 129 / 10%);
+        animation: pulse-hot 2s infinite;
+    }
+
+    &.cold {
+        border-color: #ef4444;
+        background: rgb(239 68 68 / 10%);
+        animation: pulse-cold 2s infinite;
+    }
+}
+
+.digit-number {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 2px;
+}
+
+.digit-percentage {
+    font-size: 14px;
+    font-weight: 600;
+    color: #10b981;
+    margin-bottom: 2px;
+}
+
+.digit-count {
+    font-size: 10px;
+    color: #9ca3af;
+}
+
+.frequency-legend {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgb(255 255 255 / 3%);
+    border-radius: 10px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #d1d5db;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+
+    &.hot {
+        background: #10b981;
+        box-shadow: 0 0 8px rgb(16 185 129 / 50%);
+    }
+
+    &.normal {
+        background: #6b7280;
+    }
+
+    &.cold {
+        background: #ef4444;
+        box-shadow: 0 0 8px rgb(239 68 68 / 50%);
+    }
+}
+
+.frequency-insights {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.insight {
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+
+    &.hot-insight {
+        background: rgb(16 185 129 / 10%);
+        border: 1px solid rgb(16 185 129 / 30%);
+        color: #10b981;
+    }
+
+    &.cold-insight {
+        background: rgb(239 68 68 / 10%);
+        border: 1px solid rgb(239 68 68 / 30%);
+        color: #ef4444;
+    }
+
+    &.normal-insight {
+        background: rgb(107 114 128 / 10%);
+        border: 1px solid rgb(107 114 128 / 30%);
+        color: #9ca3af;
+    }
+}
+
+@keyframes pulse-hot {
+    0%,
+    100% {
+        box-shadow: 0 0 15px rgb(16 185 129 / 30%);
+    }
+
+    50% {
+        box-shadow: 0 0 25px rgb(16 185 129 / 60%);
+    }
+}
+
+@keyframes pulse-cold {
+    0%,
+    100% {
+        box-shadow: 0 0 15px rgb(239 68 68 / 30%);
+    }
+
+    50% {
+        box-shadow: 0 0 25px rgb(239 68 68 / 60%);
+    }
+}
+
+/* Mobile Responsive */
+@media (width <= 768px) {
+    .zen-digit-frequency-overlay {
+        padding: 10px;
+    }
+
+    .zen-digit-frequency {
+        padding: 20px;
+        max-width: 100%;
+    }
+
+    .frequency-header h3 {
+        font-size: 20px;
+    }
+
+    .digits-grid {
+        gap: 15px;
+        padding: 15px 0;
+    }
+
+    .digit-circle {
+        min-height: 80px;
+    }
+
+    .digit-number {
+        font-size: 20px;
+    }
+
+    .digit-percentage {
+        font-size: 12px;
+    }
+
+    .frequency-legend {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .frequency-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+@media (width <= 480px) {
+    .digits-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 10px;
+    }
+
+    .digit-circle {
+        min-height: 60px;
+    }
+
+    .digit-number {
+        font-size: 16px;
+    }
+
+    .digit-percentage {
+        font-size: 10px;
+    }
+
+    .digit-count {
+        font-size: 8px;
+    }
+}

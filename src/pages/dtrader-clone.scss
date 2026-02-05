@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+.dtrader-clone {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #ffffff;
+    color: #333333;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.dtrader-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #ffffff;
+    color: #333333;
+
+    .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #e5e5e5;
+        border-top: 4px solid #3b82f6;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 16px;
+        color: #666;
+    }
+
+    .connection-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 10px;
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            
+            &.connected {
+                background-color: #10b981;
+            }
+            
+            &.connecting {
+                background-color: #f59e0b;
+            }
+            
+            &.disconnected, &.error {
+                background-color: #ef4444;
+            }
+        }
+
+        .status-text {
+            font-size: 12px;
+            color: #666;
+        }
+    }
+}
+
+.dtrader-header {
+    height: 60px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e5e5e5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    flex-shrink: 0;
+
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            
+            .logo-text {
+                font-size: 20px;
+                font-weight: 700;
+                color: #3b82f6;
+            }
+            
+            .demo-badge {
+                background: #f59e0b;
+                color: #000;
+                padding: 2px 10px;
+                border-radius: 4px;
+                font-size: 9px;
+                font-weight: 700;
+                white-space: nowrap;
+            }
+        }
+
+        .connection-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            .status-indicator {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                
+                &.connected {
+                    background-color: #10b981;
+                }
+                
+                &.connecting {
+                    background-color: #f59e0b;
+                }
+                
+                &.disconnected, &.error {
+                    background-color: #ef4444;
+                }
+            }
+
+            .status-text {
+                font-size: 12px;
+                color: #666;
+            }
+        }
+    }
+
+    .header-right {
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 2px;
+
+            .balance {
+                font-size: 16px;
+                font-weight: 600;
+                color: #10b981;
+            }
+
+            .account-type {
+                font-size: 12px;
+                color: #666;
+            }
+        }
+    }
+}
+
+.dtrader-content {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 300px 1fr 350px;
+    gap: 1px;
+    background-color: #e5e5e5;
+    overflow: hidden;
+
+    .left-panel, .center-panel, .right-panel {
+        background-color: #ffffff;
+        overflow: hidden;
+    }
+
+    .left-panel {
+        border-right: 1px solid #e5e5e5;
+        background-color: #ffffff; // White background for asset selector
+    }
+
+    .center-panel {
+        display: flex;
+        flex-direction: column;
+        background-color: #ffffff;
+    }
+
+    .right-panel {
+        border-left: 1px solid #e5e5e5;
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+        
+        > * {
+            background-color: #ffffff;
+        }
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+// Responsive Design
+@media (max-width: 1200px) {
+    .dtrader-content {
+        grid-template-columns: 280px 1fr 320px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .dtrader-content {
+        grid-template-columns: 1fr 300px;
+        
+        .left-panel {
+            display: none;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .dtrader-header {
+        padding: 0 15px;
+        
+        .header-left .logo .logo-text {
+            font-size: 18px;
+        }
+        
+        .header-right .user-info {
+            .balance {
+                font-size: 14px;
+            }
+            
+            .account-type {
+                font-size: 11px;
+            }
+        }
+    }
+
+    .dtrader-content {
+        grid-template-columns: 1fr;
+        
+        .right-panel {
+            display: none;
+        }
+    }
+}

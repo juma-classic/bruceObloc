@@ -1,0 +1,97 @@
+.trading-interface {
+    .interface-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 50px;
+        background-color: #f8f9fa;
+        border-top: 1px solid #e5e5e5;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        z-index: 1000;
+
+        .footer-stats {
+            display: flex;
+            gap: 30px;
+
+            .stat-item {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+
+                .stat-label {
+                    font-size: 11px;
+                    color: #666;
+                    text-transform: uppercase;
+                }
+
+                .stat-value {
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: #333;
+                    
+                    &.profit {
+                        color: #10b981;
+                    }
+                    
+                    &.loss {
+                        color: #ef4444;
+                    }
+                }
+            }
+        }
+
+        .footer-actions {
+            display: flex;
+            gap: 10px;
+
+            .action-btn {
+                width: 36px;
+                height: 36px;
+                border: 1px solid #d1d5db;
+                background-color: #ffffff;
+                color: #666;
+                border-radius: 6px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 16px;
+                transition: all 0.2s ease;
+
+                &:hover {
+                    background-color: #f3f4f6;
+                    border-color: #9ca3af;
+                    color: #333;
+                }
+
+                &:active {
+                    transform: scale(0.95);
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .trading-interface .interface-footer {
+        padding: 0 15px;
+        
+        .footer-stats {
+            gap: 20px;
+            
+            .stat-item .stat-value {
+                font-size: 13px;
+            }
+        }
+        
+        .footer-actions .action-btn {
+            width: 32px;
+            height: 32px;
+            font-size: 14px;
+        }
+    }
+}

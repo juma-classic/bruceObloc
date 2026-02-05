@@ -1,0 +1,30 @@
+.app-header {
+    &__logo {
+        padding-inline-start: 1.2rem;
+        padding-inline-end: 2rem;
+        border-inline-end: 1px solid var(--general-section-1);
+        height: 32px;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        
+        &.tradermaster-logo {
+            .tradermaster-text {
+                font-size: 1.25rem;
+                font-weight: 900;
+                letter-spacing: 0.5px;
+                background: linear-gradient(135deg, #0d9488 0%, #14b8a6 50%, #2dd4bf 100%);
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                text-transform: uppercase;
+                transition: all 0.3s ease;
+                
+                &:hover {
+                    background: linear-gradient(135deg, #2dd4bf 0%, #14b8a6 50%, #0d9488 100%);
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                }
+            }
+        }
+    }
+}
